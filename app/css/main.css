@@ -8974,6 +8974,9 @@ a.text-dark:hover, a.text-dark:focus {
 }
 /*# sourceMappingURL=bootstrap.css.map */
 .colored-block {
-  background: #fa0000; }
+  background: #fa00cc; }
   .colored-block .peace {
-    background: #05fa1a; }
+    background: #0a5caa; }
+
+.background-accent {
+  background: #0a5caa; }
