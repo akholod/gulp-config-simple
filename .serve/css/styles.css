@@ -1,10 +1,2 @@
-.colored-block {
-  background: #fa00cc; }
-  .colored-block .peace {
-    background: #0a5caa; }
-
-.background-accent {
-  background: #0a5caa; }
-
 .header-text-big {
-  background-color: red !important; }
+  color: gray; }

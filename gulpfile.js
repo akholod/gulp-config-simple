@@ -9,6 +9,7 @@ const pug = require('gulp-pug');
 const cache = require('gulp-cache');
 const imagemin = require('gulp-imagemin');
 const del = require('del');
+const babel = require('gulp-babel');
 
 const paths = {
   css: [ //include css libraries here
@@ -34,14 +35,14 @@ gulp.task('sass', function () {
 gulp.task('vendor:css', function () {
   return gulp.src(paths.css)
     .pipe(concat('vendor.css'))
-    .pipe(gulp.dest('./app/css'))
+    .pipe(gulp.dest('./vendor/css'))
     .pipe(browserSync.reload({
       stream: true
     }))
 });
 
 gulp.task('styles', ['sass', 'vendor:css'], function () {
-  return gulp.src('./app/css/**/*.css')
+  return gulp.src(['./app/css/**/*.css', './vendor/css/*.css'])
     .pipe(gulp.dest('./.serve/css'))
     .pipe(browserSync.reload({
       stream: true
@@ -49,7 +50,7 @@ gulp.task('styles', ['sass', 'vendor:css'], function () {
 });
 
 gulp.task('build_styles', ['styles'], function () {
-  return gulp.src('./app/css/**/*.css') 
+  return gulp.src(['./app/css/**/*.css', './vendor/css/*.css']) 
     .pipe(minifycss())
     .pipe(gulp.dest('./dist/css'))
 });
@@ -60,14 +61,14 @@ gulp.task('build_styles', ['styles'], function () {
 gulp.task('vendor:js', function () {
   return gulp.src(paths.js)
     .pipe(concat('vendor.js'))
-    .pipe(gulp.dest('./app/js'))
+    .pipe(gulp.dest('./vendor/js'))
     .pipe(browserSync.reload({
       stream: true
     }))
 });
 
 gulp.task('scripts', ['vendor:js'],function () {
-  return gulp.src('./app/js/**/*.js')
+  return gulp.src(['./app/js/**/*.js', './vendor/js/*.js'])
     .pipe(gulp.dest('./.serve/js'))
     .pipe(browserSync.reload({
       stream: true
@@ -75,7 +76,7 @@ gulp.task('scripts', ['vendor:js'],function () {
 });
 
 gulp.task('build_scripts', ['vendor:js'], function () {
-  return gulp.src('app/js/**/*.js')
+  return gulp.src(['./app/js/**/*.js', './vendor/js/*.js'])
     .pipe(uglify())
     .pipe(gulp.dest('./dist/js'))
 });
@@ -134,6 +135,10 @@ gulp.task('clean:dist', function () {
 gulp.task('clean:serve', function () {
   return del.sync('./.serve');
 })
+
+gulp.task('clean:all', function () {
+  return del.sync(['./.serve', './dist', './vendor']);
+})
 /////////
 
 gulp.task('browserSync', function () {
@@ -160,6 +165,6 @@ gulp.task('watch', ['preWatch'], function () {
 
 gulp.task('build', function (callback) {
   runSequence('clean:dist', 
-    ['build_scripts', 'build_styles', 'build_views', 'images', 'fonts'], 
+    ['build_scripts', 'build_styles', 'build_views', 'build_images', 'fonts'], 
     callback)
 })
