@@ -25,3 +25,21 @@ The application will be builded into a 'dist' directory
 For cleaning all temporary files run 
 
     gulp clean:all
+
+### Folders structure:
+
+For source code storage used 'app' folder. Inside the app folder:
+
+
+ - templates - folder for templates, put your 
+  pages in this folder, for each separate page, 
+  except for the main one, you need to create a 
+  folder with the name of the page with the index 
+  file.
+
+ - scss - a folder for your styles, supports both 
+  scss and css syntax.
+
+ - js - put your js files here
+
+ - images, fonts - for pictures and fonts
