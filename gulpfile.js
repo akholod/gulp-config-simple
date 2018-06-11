@@ -96,9 +96,22 @@ gulp.task('images', function () {
     .pipe(gulp.dest('./.serve/images'))
 });
 
+gulp.task('copy_fonts', function () {
+  return gulp.src('app/fonts/**/*')
+    .pipe(gulp.dest('./dist/fonts'))
+})
 gulp.task('fonts', function () {
   return gulp.src('app/fonts/**/*')
     .pipe(gulp.dest('./.serve/fonts'))
+})
+
+gulp.task('copy_assets', function () {
+  return gulp.src('app/assets/**/*')
+    .pipe(gulp.dest('./dist/assets'))
+})
+gulp.task('assets', function () {
+  return gulp.src('app/assets/**/*')
+    .pipe(gulp.dest('./.serve/assets'))
 })
 /////
 
@@ -151,7 +164,7 @@ gulp.task('browserSync', function () {
 
 gulp.task('preWatch', function (callback) {
   runSequence('clean:serve', 
-    ['browserSync', 'fonts', 'images', 'styles', 'scripts', 'views'], 
+    ['browserSync', 'fonts', 'assets', 'images', 'styles', 'scripts', 'views'], 
     callback)
 })
 
@@ -165,6 +178,6 @@ gulp.task('watch', ['preWatch'], function () {
 
 gulp.task('build', function (callback) {
   runSequence('clean:dist', 
-    ['build_scripts', 'build_styles', 'build_views', 'build_images', 'fonts'], 
+    ['build_scripts', 'build_styles', 'build_views', 'build_images', 'copy_fonts', 'copy_assets'], 
     callback)
 })
